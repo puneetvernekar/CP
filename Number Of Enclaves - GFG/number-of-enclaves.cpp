@@ -10,34 +10,38 @@ using namespace std;
 
 class Solution {
   public:
-  
-    void dfs(vector<vector<int>>&grid,vector<vector<int>>&vis,int x,int y,int n,int m)
+    int dfs(vector<vector<int>>&grid,vector<vector<int>>&vis,int r,int c)
     {
-        vis[x][y]=1;
+        vis[r][c]=1,grid[r][c]=0;
+        int n=grid.size(),m=grid[0].size();
         int dx[]={0,0,-1,1},dy[]={1,-1,0,0};
+        
         for(int i=0;i<4;i++)
         {
-            int nx=x+dx[i],ny=y+dy[i];
-            if(nx>=0 && nx<n && ny>=0 && ny<m && !vis[nx][ny] && grid[nx][ny]==1)
-            dfs(grid,vis,nx,ny,n,m);
+            int nr=r+dx[i],nc=c+dy[i];
+            if(nr>=0 && nr<n && nc>=0 && nc<m && !vis[nr][nc] && grid[nr][nc])
+            dfs(grid,vis,nr,nc);
         }
     }
     int numberOfEnclaves(vector<vector<int>> &grid) {
         // Code here
+        
         int n=grid.size(),m=grid[0].size();
         vector<vector<int>>vis(n,vector<int>(m,0));
-        
         for(int i=0;i<n;i++)
         for(int j=0;j<m;j++)
-        if((i==0 || i==n-1 || j==0 || j==m-1) && !vis[i][j] && grid[i][j]==1)
-        dfs(grid,vis,i,j,n,m);
+        {
+            if((i==0 || i==n-1 || j==0 || j==m-1) && !vis[i][j] && grid[i][j])
+            dfs(grid,vis,i,j);
+        }
         
         int ans=0;
         for(int i=0;i<n;i++)
         for(int j=0;j<m;j++)
-        if(!vis[i][j] && grid[i][j]==1)
-        ans++;
-        
+        {
+            if(grid[i][j]==1)
+            ans++;
+        }
         return ans;
     }
 };

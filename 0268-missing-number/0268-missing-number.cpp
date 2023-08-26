@@ -7,6 +7,7 @@ public:
         {s+=nums[i];
         x+=i;
         }
-        return n+x-s;
+        //x=
+        return ((n-1)*(n))/2+n-s;
     }
 };
